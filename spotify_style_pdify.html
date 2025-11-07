@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pdify — Spotify‑like</title>
+  <style>
+    :root {
+      --bg-main: #121212;
+      --bg-card: #1e1e1e;
+      --bg-hover: #282828;
+      --accent: #1db954;
+      --text-main: #fff;
+      --text-muted: #b3b3b3;
+    }
+    body {
+      margin: 0;
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      transition: background 0.5s ease;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: 16px;
+      width: 360px;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      background: var(--bg-hover);
+    }
+
+    #yt {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      width: 56px;
+      height: 56px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+    button:hover {
+      background: #1ed760;
+      transform: scale(1.08);
+    }
+    button:active {
+      transform: scale(0.92);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      margin-top: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    li {
+      background: var(--bg-hover);
+      margin-bottom: 6px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    li:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    li.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    #search {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    #search input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    #search button {
+      border-radius: 8px;
+      width: auto;
+      height: auto;
+      padding: 10px 16px;
+      font-size: 16px;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>pdify</h1>
+    <div id="yt"></div>
+
+    <div class="controls">
+      <button id="prev">⏮</button>
+      <button id="play">▶</button>
+      <button id="next">⏭</button>
+    </div>
+
+    <input id="vol" type="range" min="0" max="100" value="50">
+
+    <ul id="playlist"></ul>
+
+    <div id="search">
+      <input id="q" type="text" placeholder="suche song...">
+      <button id="searchBtn">suchen</button>
+    </div>
+  </div>
+
+  <footer>pdify — minimal music player</footer>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let yt, list = [], idx = 0, play = false;
+
+    function onYouTubeIframeAPIReady(){
+      yt = new YT.Player('yt', {
+        height:'200', width:'100%',
+        events:{ onReady:()=>updateList(), onStateChange:e=>{if(e.data===0) next();} }
+      });
+    }
+
+    const playlistEl=document.getElementById('playlist');
+
+    function updateList(){
+      playlistEl.innerHTML='';
+      list.forEach((v,i)=>{
+        const li=document.createElement('li');
+        li.textContent=v.title;
+        if(i===idx) li.classList.add('active');
+        li.onclick=()=>load(i);
+        playlistEl.appendChild(li);
+      });
+    }
+
+    function load(i){
+      idx=i;
+      yt.loadVideoById(list[i].id);
+      updateList();
+    }
+
+    function togglePlay(){
+      if(!yt)return;
+      if(play) yt.pauseVideo(); else yt.playVideo();
+      play=!play;
+    }
+
+    function next(){ if(idx<list.length-1) load(idx+1); }
+    function prev(){ if(idx>0) load(idx-1); }
+
+    document.getElementById('play').onclick=togglePlay;
+    document.getElementById('next').onclick=next;
+    document.getElementById('prev').onclick=prev;
+    document.getElementById('vol').oninput=e=>yt.setVolume(e.target.value);
+
+    document.getElementById('searchBtn').onclick=async()=>{
+      const q=document.getElementById('q').value.trim();
+      if(!q)return;
+      const res=await fetch(`https://yt-api-proxy.vercel.app/search?query=${encodeURIComponent(q)}`);
+      const data=await res.json();
+      list=data.items.map(v=>({title:v.title,id:v.id}));
+      updateList();
+      if(list.length) load(0);
+    };
+  </script>
+</body>
+</html>
