@@ -1,10 +1,32 @@
-<h1 align="center">YouTube Music Player Web</h1>
+# 🎵 Custom Music Player
 
-> [!WARNING]
-> **This project is in the testing stage and some features may be unstable and unsafe. Use at your own risk.**
+A modern, responsive web music player with **Spotify‑inspired UI**.  
+Features include dark/light mode, smooth animations, drag‑and‑drop playlist management, and custom controls for playback, volume, auto‑play, and repeat.
 
-> [!NOTE]
-> **The project was developed using HTML, CSS, JavaScript language and [YouTube Iframe Player API](https://developers.google.com/youtube/iframe_api_reference).**
+---
+
+## ✨ Features
+
+- **Spotify‑like playlist styling**: sleek dark theme, hover highlights, green accents.
+- **Dark/Light mode toggle** with smooth transitions.
+- **Drag & Drop playlist management** with ghost previews and reorder indicators.
+- **Custom controls**: play/pause, next/previous, repeat, auto‑play toggle.
+- **Progress bar & time display** with draggable seek.
+- **Volume control** with custom slider and thumb.
+- **Album art display** with rotation animation while playing.
+- **Responsive design**: adapts to mobile, tablet, and desktop.
+- **Floating settings menu** with animated toggle button.
+
+---
+
+## 🚀 Getting Started
+
+1. fork the repository.
+2. Deploy on Github Pages in your browser.
+3. Add your songs to the playlist via the UI or script.
+4. Enjoy your custom player!
+
+---
 
 ## Screenshots
 ![Alt text](resource/image/1.png)
@@ -12,12 +34,6 @@
 ![Alt text](resource/image/3.png)
 ![Alt text](resource/image/4.png)
 ![Alt text](resource/image/5.png)
-
-## Information
-
-This project is a **YouTube Music Player Web Application** that allows users to stream and control YouTube videos as an interactive music player. It features a custom playlist, enabling users to select and play songs seamlessly. The app includes auto-play, repeat mode, and volume control, along with a progress bar for tracking playback. Additionally, a dark mode toggle enhances user experience. The interface is styled using Bootstrap and custom CSS animations, while JavaScript manages the YouTube IFrame API for video playback. The app also dynamically updates the background image based on the selected song, creating a visually engaging experience.
-
-The player in this project is created using the **YouTube IFrame API**, which allows embedding and controlling YouTube videos through JavaScript.
 
 ## 🚀 Setup Instructions
 
@@ -44,134 +60,3 @@ For secure API key management, this project uses GitHub Secrets:
    - The GitHub Actions workflow will automatically inject your API key during deployment
    - Push any changes to the `main` branch to trigger a new deployment
    - Your API key remains secure and is never exposed in your code
-
-### Alternative: Local Development Setup
-
-For local development, you can still manually add the API key:
-
-1. **Clone the repository locally**
-2. **Create `config.js` files**
-3. **Insert**: `const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY';`
-4. **Replace** `'YOUR_YOUTUBE_API_KEY'` with your actual API key
-5. **Important**: Never commit this change to prevent exposing your API key
-
-### API Usage Information
-
-- **Daily Quotas**: The YouTube Data API has daily quotas
-- **Search Requests**: Each search consumes quota units
-- **Free Tier**: Should be sufficient for personal use
-- **Rate Limiting**: The app includes error handling for API limits
-
-### Without API Key
-
-If you don't want to set up the YouTube API, you can still:
-- Use the existing default playlist
-- Manually add songs by editing the `playlist` array in `script.js`
-- Search and filter your existing playlist
-- Import and Export Playlist & Data
-- Add a song using a YouTube video link: https://jacob7179.github.io/YouTube-Music-Player-Web/?add_song=`YOUTUBE_VIDEO_LINK`
-
-## 🎵 How to Use
-
-1. **Playing Songs**: Click on any song in your playlist to play it
-2. **Search YouTube**: Use the search bar to find new songs on YouTube
-3. **Add Songs**: Click the "Add" button next to search results to add them to your playlist
-4. **Persistent Playlist**: Your playlist is saved in browser storage and persists across sessions
-5. **Remove Songs**: Click the trash icon next to songs in your playlist to remove them
-6. **Search Playlist**: Use the playlist search bar to filter your existing songs
-7. **Controls**: Use play/pause, next/previous, volume, and repeat controls
-8. **Dark Mode**: Toggle dark mode for better viewing experience
-9. **Lyrics**: Toggle to view the song’s lyrics
-10. **Language**: Languages available: English, 中文
-11. **Drag and Drop**: Drag songs to reorder your playlist
-12. **Secure API Key Management**: Uses GitHub Secrets for secure API key storage
-13. **Optimized Search**: Searched result will store in browser storage (No need to waste Quota for same results)
-14. **Import Playlist & Data**: Import playlist and data (Dark mode, Album Art spin settings & Lyrics settings) from JSON or TXT file
-15. **Export Playlist & Data**: Export playlist and data (Dark mode, Album Art spin settings & Lyrics settings) to TXT file
-16. **Album Art Spin Toggle**: Toggle Album Art Spin option to enable or disable album art spinning
-17. **Delete Search Cache**: Delete search cache from browser storage
-
-## 🔧 GitHub Actions Workflow
-
-This project uses GitHub Actions to:
-- **Securely inject** the YouTube API key from GitHub Secrets
-- **Automatically deploy** to GitHub Pages on every push to main
-- **Keep your API key safe** by never exposing it in the repository
-
-The workflow file is located at `.github/workflows/deploy.yml`.
-
-## 📁 Project Structure
-
-- `index.html` - Main application interface
-- `script.js` - Core functionality and YouTube integration
-- `style.css` - Styling and animations
-- `.github/workflows/deploy.yml` - GitHub Actions deployment workflow
-- `README.md` - This documentation
-- `/beta/index.html` - Read Excel Files Methods Version (Experimental Project)
-- `/alpha/index.html` - Read Api Keys Methods Version (Experimental Project)
-- `/resource` - Source of the project (Image, Files, Icon & Export data version)
-
-## 🔐 Security Features
-
-- **GitHub Secrets**: API keys are stored securely in GitHub Secrets
-- **No Key Exposure**: API keys are never committed to the repository
-- **Automatic Injection**: Keys are injected during deployment only (But you can found api keys declaration on website [config.js])
-- **Restricted API Keys**: Recommended to restrict API keys to specific services
-
-## 🤝 Attribution
-
-- **Original Creator**: [Jacob7179](https://github.com/Jacob7179) - Created the base YouTube Music Player
-- **Original Repository**: [Jacob7179/YouTube-Music-Player-Web](https://github.com/Jacob7179/YouTube-Music-Player-Web)
-- **Fork Maintainer**: [Farwalker3](https://github.com/Farwalker3) - Added enhanced features and YouTube search
-
-## 📄 License
-
-[![License](https://img.shields.io/github/license/Jacob7179/YouTube-Music-Player-Web?logo=github&style=for-the-badge)](LICENSE)
-
-## 🌐 Website
-[![Website](https://img.shields.io/badge/Website-Visit-blue?style=for-the-badge&logo=internet-explorer)](https://jacob7179.github.io/YouTube-Music-Player-Web/)
-
-## 🐛 Issues & Contributions
-
-If you encounter any issues or have suggestions for improvements:
-- Check the [original repository](https://github.com/Jacob7179/YouTube-Music-Player-Web) for base functionality issues
-- Open issues in this fork for enhanced features
-- Contributions are welcome via pull requests
-
-## 🔧 Development
-
-To run this project locally:
-1. Clone the repository
-2. Set up your YouTube Data API key (see setup instructions above)
-3. Open `index.html` in a web browser
-4. The app works entirely client-side, no server required
-
-For production deployment:
-1. Set up the `YOUTUBE_API_KEY` secret in your GitHub repository
-2. Push to the `main` branch
-3. GitHub Actions will handle the rest!
-
-## Contributors
-
-<table>
-    <tbody>
-        <tr>
-            <td align="center" valign="top" width="14.28%">
-                <a href="https://github.com/Jacob7179" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/70430960?v=4" width="100px;" alt="Jacob7179 Avatar"/><br />
-                    <sub><b>Jacob7179</b></sub>
-                </a>
-            </td>
-            <td align="center" valign="top" width="14.28%">
-                <a href="https://github.com/Farwalker3" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/30270971?v=4" width="100px;" alt="Farwalker3 Avatar"/><br />
-                    <sub><b>Farwalker3</b></sub>
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
----
-*This project builds upon the excellent work of [Jacob7179](https://github.com/Jacob7179). Thanks for creating such a solid foundation!*
